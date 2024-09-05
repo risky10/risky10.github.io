@@ -48,10 +48,11 @@ document.addEventListener('DOMContentLoaded', function () {
     // Play the full sequence to the player
     function playSequence() {
         let delay = 0;
+        const colors = ['dennis', 'mac', 'frank', 'charlie'];
         colorButtons.forEach(button => button.classList.add('disabled'));
         gameSequence.forEach(color => {
             setTimeout(() => {
-                flashButton(color);
+                flashButton(colors[Math.floor(Math.random() * colors.length)]);
                 playSound(color); // Play the corresponding sound
             }, delay);
             delay += 1000; // 1 second delay between each flash
