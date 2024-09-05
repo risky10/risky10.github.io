@@ -1,0 +1,140 @@
+/* General body styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url("images/background.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: #121212; /* Dark background */
+    color: #ffffff; /* Light text color */
+}
+
+/* Logout button styling */
+.logout-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background-color: #ec4343; /* Darker button */
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Main container styling */
+.main-container {
+    width: 100%;
+    max-width: 800px;
+    padding: 20px;
+    /*background-color: #c6ecec; /* Slightly lighter dark background */
+    background-color: rgba(64, 204, 185, 1); /* White background with 80% opacity */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    position: relative; /* Ensure the container is the reference for absolute positioning */
+}
+
+#status {
+    position: absolute;
+    top: 10px;   /* Adjust as necessary */
+    left: 20px;  /* Adjust as necessary */
+    font-size: 22px; /* Customize the font size if needed */
+    color: #fffefe; /* Adjust text color */
+}
+
+#game-over-message {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 100px;
+    color: red;
+    font-weight: bold;
+    display: none; /* Hidden by default */
+}
+
+#game-over-message.show {
+    display: block; /* Show when needed */
+}
+
+.logout-button:hover {
+    background-color: #b41010; /* Slightly lighter on hover */
+}
+
+/* Title styling */
+h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: #ffffff; /* White text */
+}
+
+/* Simon game area styling */
+
+/* Flex container for the color buttons */
+.color-buttons-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 600px; /* Adjust as needed */
+    margin: 0 auto; /* Center the container */
+    gap: 50px;
+}
+
+/* Flexbox to adjust spacing of left and right groups */
+.left-group,
+.right-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 50px;
+}
+
+/* Individual color button */
+.color-button {
+    width: 250px; /* Adjust width to ensure they fit within the container */
+    height: auto;
+    transition: transform 0.2s;
+}
+
+.color-button:hover {
+    /*background-color: #afb12d;*/
+    transform: scale(1.05); /* Slightly enlarge the image on click */
+}
+/* Highlight on click */
+.color-button:active {
+    transform: scale(1.15); /* Slightly enlarge the image on click */
+}
+/* Disable hover and active effects */
+.color-button.disabled {
+    pointer-events: none; /* Disable pointer events, no hovering or clicking */
+    transform: none; /* Remove transform effect */
+}
+
+
+/* Start button styling */
+#start-game {
+    margin-top: 30px;
+    padding: 20px 30px;
+    background-color: #007bff; /* Bright blue button */
+    color: #ffffff;
+    font-size: 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#start-game:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simon Says Game</title>
+    <link rel="stylesheet" href="mainstyle.css">
+</head>
+<body>
+    <button class="logout-button">Logout</button>
+    <div class="main-container">
+
+        <!-- Simon Says Game Area -->
+        <div class="color-buttons-container">
+            <div class="left-group">
+                <img id="green" class="color-button left" src="images/green.png" alt="Green Button">
+                <img id="red" class="color-button left" src="images/red.png" alt="Red Button">
+            </div>
+            <div class="right-group">
+                <img id="yellow" class="color-button right" src="images/yellow.png" alt="Yellow Button">
+                <img id="blue" class="color-button right" src="images/blue.png" alt="Blue Button">
+            </div>
+        </div>
+
+        <button id="start-game">Start Game</button>
+        <p id="status"></p>
+        <div id="game-over-message" class="hidden">GAME OVER</div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
