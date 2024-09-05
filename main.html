@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simon Says Game</title>
+    <title>Always sunny</title>
     <link rel="stylesheet" href="mainstyle.css">
 </head>
 <body>
@@ -26,7 +26,12 @@
         <p id="status"></p>
         <div id="game-over-message" class="hidden">GAME OVER</div>
     </div>
-
+    <script>
+        // Logout button functionality
+        document.querySelector('.logout-button').addEventListener('click', function() {
+            window.location.href = 'index.html'; // Redirect back to login page
+        });
+    </script>
     <script src="game.js"></script>
 </body>
 </html>
