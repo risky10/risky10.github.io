@@ -10,25 +10,59 @@
     <div class="login-container">
         <h1 class="title">SIMON SAYS</h1>
         <img src="images/simon.png" alt="Simon Says Logo" class="logo">
-        <form class="login-form">
+        <form id="login-form" class="login-form">
             <div class="input-group">
                 <label for="username">Username</label>
-                <input type="text" id="username" name="username">
-                <span class="error-message" id="username-error"></span>
+                <input type="text" id="username" name="username" required>
             </div>
             <div class="input-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password">
-                <span class="error-message" id="password-error"></span>
+                <input type="password" id="password" name="password" required>
             </div>
-            <div class="input-group remember-me">
-                <input type="checkbox" id="remember-me" name="remember-me">
-                <label for="remember-me">Remember Me</label>
-            </div>
+            <p id="error-message" style="color: red;"></p>
             <button type="submit">Login</button>
             <p>Don't have an account? <a href="register.html">Register here</a></p>
         </form>
     </div>
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Import the Firebase SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCNMRvcgg0yTfgxgHtCPrVvFJCsYTwBUxE",
+            authDomain: "sunny-6bd3d.firebaseapp.com",
+            projectId: "sunny-6bd3d",
+            storageBucket: "sunny-6bd3d.appspot.com",
+            messagingSenderId: "315944067428",
+            appId: "1:315944067428:web:1749b4c7c118cb2aec5a71"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Login form submission handling
+        document.getElementById('login-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const email = `${username}@yourapp.com`;
+
+            // Firebase login
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    // Logged in successfully
+                    window.location.href = 'main.html'; // Redirect to main page
+                })
+                .catch((error) => {
+                    document.getElementById('error-message').textContent = 'Incorrect Username or Password!';
+                });
+        });
+    </script>
     <script src="script.js"></script>
 </body>
 </html>

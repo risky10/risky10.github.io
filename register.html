@@ -9,7 +9,7 @@
 <body>
     <div class="register-container">
         <h1>Register</h1>
-        <form action="/register" method="POST" id="register-form" class="register-form">
+        <form id="register-form">
             <div class="input-group">
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required>
@@ -18,13 +18,48 @@
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            <div class="input-group">
-                <label for="confirm-password">Confirm Password:</label>
-                <input type="password" id="confirm-password" name="confirm-password" required>
-            </div>
+            <p id="error-message" style="color: red;"></p>
             <button type="submit">Register</button>
         </form>
         <p>Already have an account? <a href="index.html">Login here</a></p>
     </div>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCNMRvcgg0yTfgxgHtCPrVvFJCsYTwBUxE",
+            authDomain: "sunny-6bd3d.firebaseapp.com",
+            projectId: "sunny-6bd3d",
+            storageBucket: "sunny-6bd3d.appspot.com",
+            messagingSenderId: "315944067428",
+            appId: "1:315944067428:web:1749b4c7c118cb2aec5a71"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        
+        // Registration form submission handling
+        document.getElementById('register-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const email = `${username}@yourapp.com`;  // Treat username as email for Firebase
+
+            // Firebase registration
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    // User registered successfully
+                    alert('User registered!');
+                })
+                .catch((error) => {
+                    document.getElementById('error-message').textContent = error.message;
+                });
+        });
+    </script>
 </body>
 </html>
