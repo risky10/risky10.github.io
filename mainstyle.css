@@ -134,10 +134,22 @@ h1 {
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s;
+
 }
 
 #start-game:hover {
     background-color: #0056b3; /* Darker blue on hover */
+}
+
+#start-game.hidden {
+    display: none; /* Show when needed */
+}
+
+#start-button-placeholder {
+    margin-top: 30px;
+    width: 162.27px;
+    height: 63px; 
+    display: none;
 }
 
 #hard-mode {

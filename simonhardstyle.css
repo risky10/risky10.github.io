@@ -139,6 +139,15 @@ h1 {
 #start-game:hover {
     background-color: #0056b3; /* Darker blue on hover */
 }
+#start-game.hidden {
+    display: none; /* Show when needed */
+}
+#start-button-placeholder {
+    margin-top: 30px;
+    width: 162.27px;
+    height: 63px; 
+    display: none;
+}
 
 #normal-mode {
     position: absolute;

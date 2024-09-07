@@ -21,7 +21,6 @@ document.addEventListener('DOMContentLoaded', function () {
         charlie: new Audio('sounds/charlie-beak.wav')
     };
     
-
     // Function to play sound based on color
     function playSound(color) {
         sounds[color].currentTime = 0; // Rewind to the start
@@ -79,6 +78,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Start the game
     startButton.addEventListener('click', () => {
+        startButton.classList.add('hidden'); // Hide the Start Button
+        document.getElementById('start-button-placeholder').style.display = 'block';
         gameSequence = [];
         level = 0;
         //statusDisplay.textContent = 'Starting...';
@@ -103,6 +104,8 @@ document.addEventListener('DOMContentLoaded', function () {
             const currentMoveIndex = playerSequence.length - 1;
             if (playerSequence[currentMoveIndex] !== gameSequence[currentMoveIndex]) {
                 gameOverMessage.classList.add('show'); // Show "Game Over"
+                document.getElementById('start-button-placeholder').style.display = 'none';
+                startButton.classList.remove('hidden');
                 statusDisplay.style.top = '65%';
                 statusDisplay.style.left = '45%';
                 gameoverSound.play();

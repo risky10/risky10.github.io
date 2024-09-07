@@ -10,7 +10,13 @@ document.addEventListener('DOMContentLoaded', function () {
     let playerSequence = [];
     let level = 0;
     let isPlayerTurn = false;
-
+    const originalOrder = [
+        document.getElementById('mac'),
+        document.getElementById('dennis'),
+        document.getElementById('frank'),
+        document.getElementById('charlie')
+    ];
+   
     colorButtons.forEach(button => button.classList.add('disabled'));
 
     // Define sound files for each color
@@ -26,6 +32,27 @@ document.addEventListener('DOMContentLoaded', function () {
     function playSound(color) {
         sounds[color].currentTime = 0; // Rewind to the start
         sounds[color].play();
+    }
+
+    function resetImages() {
+        const container = document.querySelector('.color-buttons-container');
+        container.innerHTML = ''; // Clear the container
+        originalOrder.forEach(button => container.appendChild(button)); // Restore original order
+    }
+
+    function shuffleImages() {
+        const container = document.querySelector('.color-buttons-container');
+        const buttons = Array.from(originalOrder);
+    
+        // Shuffle the array of buttons
+        for (let i = buttons.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [buttons[i], buttons[j]] = [buttons[j], buttons[i]];
+        }
+    
+        // Clear the container and append the buttons in the new order
+        container.innerHTML = '';
+        buttons.forEach(button => container.appendChild(button));
     }
 
     // Flash the button to show sequence
@@ -61,6 +88,7 @@ document.addEventListener('DOMContentLoaded', function () {
         setTimeout(() => {
             isPlayerTurn = true;
             colorButtons.forEach(button => button.classList.remove('disabled'));
+            shuffleImages();
             //statusDisplay.textContent = 'Your turn!';
         }, delay);
         
@@ -80,14 +108,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Start the game
     startButton.addEventListener('click', () => {
+        startButton.classList.add('hidden'); // Hide the Start Button
+        document.getElementById('start-button-placeholder').style.display = 'block';
         gameSequence = [];
         level = 0;
-        //statusDisplay.textContent = 'Starting...';
         gameOverMessage.classList.remove('show');
         colorButtons.forEach(button => button.classList.remove('disabled')); // Re-enable hover and active effects
         statusDisplay.style.top = '10px';
         statusDisplay.style.left = '20px';
+
+        resetImages();
         setTimeout(nextLevel, 1000);
+        
     });
 
     // Handle player clicks
@@ -104,6 +136,8 @@ document.addEventListener('DOMContentLoaded', function () {
             const currentMoveIndex = playerSequence.length - 1;
             if (playerSequence[currentMoveIndex] !== gameSequence[currentMoveIndex]) {
                 gameOverMessage.classList.add('show'); // Show "Game Over"
+                document.getElementById('start-button-placeholder').style.display = 'none';
+                startButton.classList.remove('hidden');
                 statusDisplay.style.top = '65%';
                 statusDisplay.style.left = '45%';
                 gameoverSound.play();
