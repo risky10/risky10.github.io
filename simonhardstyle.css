@@ -7,12 +7,12 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-image: url("images/background.png");
+    /*background-image: url("images/background.png");*/
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    background-color: #121212; /* Dark background */
+    background-color: #292727; /* Dark background */
     color: #ffffff; /* Light text color */
 }
 
@@ -31,6 +31,49 @@ body {
     transition: background-color 0.3s;
 }
 
+.highscores-hard {
+    position: absolute;
+    margin-top: 1px;
+    top: 15%;
+    left: 50px;
+    width: 400px; /* Fixed width */
+    height: 400px; /* Fixed height */
+    background-color: #3f3b3b;
+    border-radius: 10px;
+    padding: 20px; /* Add padding inside the container */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.highscores-hard h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 30px;
+    text-align: center;
+    color: white;
+}
+
+#highscore-list-hard {
+    list-style-type: decimal;
+    padding-left: 150px;
+    font-size: 25px;
+    margin-top: 20px;
+}
+#highscore-list-hard li:nth-child(1) {
+    color: gold;
+    font-weight: bold;
+}
+#highscore-list-hard li:nth-child(2) {
+    color: silver;
+    font-weight: bold;
+}
+#highscore-list-hard li:nth-child(3) {
+    color: #cd7f32; /* Bronze */
+    font-weight: bold;
+}
+#highscore-list-hard li {
+    margin-bottom: 5px;
+}
+
 .logout-button:hover {
     background-color: #b41010; /* Slightly lighter on hover */
 }
@@ -46,6 +89,73 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     text-align: center;
     position: relative; /* Ensure the container is the reference for absolute positioning */
+}
+
+/* Style the question mark */
+.tooltip-container {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.question-mark {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffffff;
+    padding: 3px;
+    border: 2px solid #ffffff; /* White circle border */
+    border-radius: 15%;
+    cursor: default;
+}
+
+/* Tooltip styling */
+.tooltip-text {
+    visibility: hidden;
+    width: 180px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    top: -5px;
+    right: 120%; /* Move the bubble to the left of the question mark */
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 13px;
+}
+
+/* Show the tooltip when hovering over the question mark */
+.tooltip-container:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    left: 50%;
+    bottom: -3%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(0, 0, 0);
+    border: 2px solid #000;
+    padding: 20px;
+    z-index: 1000;
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#submit-highscore {
+    margin-top: 10px;
+}
+
+.hidden {
+    display: none;
 }
 
 #status {

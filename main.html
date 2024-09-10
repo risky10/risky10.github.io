@@ -7,12 +7,20 @@
     <link rel="stylesheet" href="mainstyle.css">
 </head>
 <body>
-    <button class="logout-button">Logout</button>
-    <ul id="highscore-list">
-        <!-- Highscores will be appended here -->
-    </ul>
+    <button class="logout-button">Back</button>
+    <div class="highscores">
+        <h3>Normal Mode Highscores</h3>
+        <ol id="highscore-list-normal"></ol>
+    </div>
+    <div id="highscore-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>New Highscore!</h2>
+            <p>Enter your name to record your score:</p>
+            <input type="text" id="username-input" placeholder="Your name" maxlength="15">
+            <button id="submit-highscore">Submit</button>
+        </div>
+    </div>
     <div class="main-container">
-
         <!-- Simon Says Game Area -->
         <div class="color-buttons-container">
             <div class="left-group">
@@ -32,6 +40,31 @@
         <p id="status"></p>
         <div id="game-over-message" class="hidden">GAME OVER</div>
     </div>
+    <script type="module">
+        // Import Firebase and Firestore
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+    
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCNMRvcgg0yTfgxgHtCPrVvFJCsYTwBUxE",
+            authDomain: "sunny-6bd3d.firebaseapp.com",
+            projectId: "sunny-6bd3d",
+            storageBucket: "sunny-6bd3d.appspot.com",
+            messagingSenderId: "315944067428",
+            appId: "1:315944067428:web:1749b4c7c118cb2aec5a71"
+        };
+    
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+    
+        // Initialize Firestore
+        const db = getFirestore(app);
+    
+        // Call the game initialization and pass `db`
+        import { initializeGame } from './game.js';
+        initializeGame(db);
+    </script>
     <script>
         // Logout button functionality
         document.querySelector('.logout-button').addEventListener('click', function() {
@@ -43,6 +76,6 @@
             window.location.href = 'simonsaysHard.html';
         });
     </script>
-    <script src="game.js"></script>
+    <script type="module" src="game.js"></script>
 </body>
 </html>

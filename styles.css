@@ -1,172 +1,38 @@
-/* Apply box-sizing to all elements */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
 body {
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
-    align-items: center;
     height: 100vh;
-    background-color: #f4f4f4;
+    background-color: #292727;
 }
 
-/* Login container styling */
-.login-container {
+.sunnyGames {
     width: 100%;
-    max-width: 400px;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    opacity: 0;
-    transform: translateY(-20px);
-    animation: fadeIn 1s forwards;
-    text-align: center; /* Center text within the container by default */
+    position: relative;
 }
 
 /* Title styling */
 .title {
     font-size: 32px;
-    color: #333;
+    color: #fffcfc;
     margin-bottom: 20px;
     font-weight: bold;
+    position: absolute;
+    left: 50%;
+    top: 10%;
 }
 
-/* Logo styling */
-.logo {
-    width: 150px;
-    height: auto;
-    margin-bottom: 20px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+.simonSays {
+    position: absolute;
+    left: 50%;
+    top: 30%;
 }
 
-/* Input group styling */
-.input-group {
-    margin-bottom: 15px;
-    text-align: left; /* Ensure inputs and labels align left */
+.simonSays:hover {
+    /*background-color: #afb12d;*/
+    transform: scale(1.05); /* Slightly enlarge the image on click */
 }
-
-.input-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-size: 14px;
-    color: #333;
-}
-
-.input-group input {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    outline: none;
-    transition: border-color 0.3s;
-}
-
-/* Focus effect on inputs */
-.input-group input:focus {
-    border-color: #007bff;
-}
-
-/* Error message styling */
-.error-message {
-    color: red;
-    font-size: 12px;
-    margin-top: 5px;
-    display: block;
-    opacity: 0;
-    animation: fadeInError 0.5s forwards;
-}
-
-/* Remember Me Checkbox */
-.remember-me {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    margin-bottom: 20px;
-    text-align: left; /* Override centering */
-    width: 100%;
-}
-
-.remember-me input {
-    margin-right: 10px;
-}
-
-.remember-me label {
-    margin: 0;
-    font-size: 14px;
-    color: #333;
-    display: inline; /* Ensure it stays inline with checkbox */
-}
-
-/* Button styling */
-button[type="submit"] {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    margin-top: 20px;
-    background-color: #007bff;
-    color: #fff;
-    font-size: 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-button[type="submit"]:hover {
-    background-color: #0056b3;
-}
-
-/* Toggle password visibility */
-.toggle-password {
-    display: inline-block;
-    margin-top: 5px;
-    color: #007bff;
-    cursor: pointer;
-    font-size: 12px;
-}
-
-/* Fade-in animation */
-@keyframes fadeIn {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Fade-in animation for error messages */
-@keyframes fadeInError {
-    to {
-        opacity: 1;
-    }
-}
-
-/* Additional styling for smaller screens */
-@media (max-width: 480px) {
-    .login-container {
-        padding: 15px;
-    }
-
-    .title {
-        font-size: 28px;
-    }
-
-    .logo {
-        width: 120px;
-    }
-
-    .login-form h2 {
-        font-size: 20px;
-    }
-
-    button[type="submit"] {
-        font-size: 14px;
-    }
+/* Highlight on click */
+.simonSays:active {
+    transform: scale(1.15); /* Slightly enlarge the image on click */
 }
