@@ -2,8 +2,8 @@ const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
 // Set canvas size
-canvas.width = 1000;
-canvas.height = 500;
+canvas.width = 1200;
+canvas.height = 700;
 
 // Bird object
 const bird = {
@@ -19,18 +19,33 @@ const bird = {
 // Variables for pipe
 let pipes = [];
 const pipeWidth = 80; 
-const pipeGap = 180;
+const pipeGap = 220;
 let pipeSpeed = 5;
 let pipeInterval = 1800;  // Time in milliseconds between pipe generation
 let pipeTimer = 0;
+// Variables for pipe movement
+let pipeVerticalSpeed = 2;  // Speed at which the pipes move vertically
+let pipeDirection = 1;      // 1 means down, -1 means up
+const verticalMovementThreshold = 10; // Start moving pipes at score 10
+const bufferZone = 10;  // Buffer to prevent stuttering
 
 let gameStarted = false;
 let gameOver = false;
+let newGame = true;
 
 let score = 0;
 let scoreIncreaseThreshold = 5; // Increase difficulty every 50 points
 
-let newGame = true;
+let animationId;
+
+const pipeImageTop = new Image();
+pipeImageTop.src = 'images/gailsnailtop.png';  // Path to your top pipe image
+
+const pipeImageBottom = new Image();
+pipeImageBottom.src = 'images/gailsnailbot.png';  // Path to your top pipe image
+
+const birdImage = new Image();
+birdImage.src = 'images/flappybird.jpg';
 
 // Generate new pipes
 function createPipe() {
@@ -38,13 +53,25 @@ function createPipe() {
     const pipe = {
         x: canvas.width,
         topHeight: pipeHeight,
-        bottomHeight: canvas.height - pipeHeight - pipeGap
+        bottomHeight: canvas.height - pipeHeight - pipeGap,
+        direction: Math.random() > 0.5 ? 1 : -1  // Randomize starting direction (1 = down, -1 = up)
     };
     pipes.push(pipe);
 }
 
 function drawPipes() {
     pipes.forEach(pipe => {
+        if (score >= verticalMovementThreshold) {
+            pipe.topHeight += pipeVerticalSpeed * pipeDirection;
+            pipe.bottomHeight = canvas.height - pipe.topHeight - pipeGap;
+
+            // Change direction if pipes reach the top or bottom limits with a buffer
+            if (pipe.topHeight <= 0) {
+                pipeDirection = 1;  // Start expanding the top pipe and shrinking the bottom pipe
+            } else if (pipe.bottomHeight <= 0) {
+                pipeDirection = -1;  // Start shrinking the top pipe and expanding the bottom pipe
+            }
+        }
         // Top pipe
         ctx.fillStyle = "green";
         ctx.fillRect(pipe.x, 0, pipeWidth, pipe.topHeight);
@@ -65,7 +92,10 @@ function updatePipes() {
 
             // Increase difficulty based on score
             if (score % scoreIncreaseThreshold === 0) {
-                pipeSpeed += 1; // Gradually increase the speed
+                if(score > verticalMovementThreshold) {
+                    pipeVerticalSpeed += 0.5;
+                }
+                pipeSpeed += 0.5; // Gradually increase the speed
                 if(pipeInterval>800) {
                     pipeInterval -= 100;
                 }
@@ -111,6 +141,8 @@ function endGame() {
     ctx.fillStyle = 'red';
     ctx.fillText('Game Over', canvas.width / 2 - 100, canvas.height / 2);
 
+    cancelAnimationFrame(animationId);
+
     // Display the restart button
     const restartBtn = document.createElement('button');
     restartBtn.innerText = 'Restart';
@@ -129,6 +161,7 @@ function endGame() {
         score = 0;
         pipeSpeed = 5;
         pipeInterval = 1800;
+        pipeTimer = 0;
         bird.gravity = 0.6;
         gameStarted = false;
         gameOver = false;
@@ -146,17 +179,33 @@ function drawScore() {
     ctx.fillText(`Score: ${score}`, 20, 40);
 }
 
-
 function flapBird() {
-    // Handle user input (spacebar to flap)
-    document.addEventListener('keydown', function(event) {
-        if (event.code === 'Space' && !gameOver) {
-            if (!gameStarted) {
-                gameStarted = true;
-            }
-            bird.velocity = bird.lift;  // Move the bird upwards when space is pressed
+   // Remove any existing event listeners before adding a new one
+   document.removeEventListener('keydown', handleFlap); 
+   document.addEventListener('keydown', handleFlap);
+
+   // Add touch event for mobile (tapping the screen)
+   canvas.removeEventListener('touchstart', handleTap);
+   canvas.addEventListener('touchstart', handleTap);
+}
+
+function handleFlap(event) {
+    if (event.code === 'Space' && !gameOver) {
+        if (!gameStarted) {
+            gameStarted = true;
         }
-    });
+        bird.velocity = bird.lift;  // Move the bird upwards when space is pressed
+    }
+}
+
+function handleTap() {
+    // Handle the touch event, same as spacebar
+    if (!gameOver) {
+        if (!gameStarted) {
+            gameStarted = true;
+        }
+        bird.velocity = bird.lift;  // Move the bird upwards when the screen is tapped
+    }
 }
 
 function applyGravity() {
@@ -205,7 +254,7 @@ function gameLoop() {
             
         }
 
-        requestAnimationFrame(gameLoop);
+        animationId = requestAnimationFrame(gameLoop);
     }
 }
 
