@@ -31,64 +31,51 @@ body {
     transition: background-color 0.3s;
 }
 
+.logout-button:hover {
+    background-color: #b41010; /* Slightly lighter on hover */
+}
+
 .highscores {
     position: absolute;
-    margin-top: 1px;
-    top: 15%;
-    left: 50px;
-    width: 400px; /* Fixed width */
-    height: 400px; /* Fixed height */
+    top: 10%;
+    left: 10px;
+    width: 90vw; /* Make it responsive */
+    max-width: 400px;
+    height: auto;
     background-color: #3f3b3b;
     border-radius: 10px;
-    padding: 20px; /* Add padding inside the container */
+    padding: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
 .highscores h3 {
-    margin-top: 0;
-    margin-bottom: 15px;
-    font-size: 30px;
+    font-size: 24px;
     text-align: center;
     color: white;
 }
 
 #highscore-list-normal {
     list-style-type: decimal;
-    padding-left: 150px;
-    font-size: 25px;
-    margin-top: 20px;
-}
-#highscore-list-normal li:nth-child(1) {
-    color: gold;
-    font-weight: bold;
-}
-#highscore-list-normal li:nth-child(2) {
-    color: silver;
-    font-weight: bold;
-}
-#highscore-list-normal li:nth-child(3) {
-    color: #cd7f32; /* Bronze */
-    font-weight: bold;
-}
-#highscore-list-normal li {
-    margin-bottom: 5px;
+    padding-left: 40px;
+    font-size: 18px;
 }
 
-.logout-button:hover {
-    background-color: #b41010; /* Slightly lighter on hover */
-}
+/* Adjusting title colors */
+#highscore-list-normal li:nth-child(1) { color: gold; font-weight: bold; }
+#highscore-list-normal li:nth-child(2) { color: silver; font-weight: bold; }
+#highscore-list-normal li:nth-child(3) { color: #cd7f32; font-weight: bold; }
 
 /* Main container styling */
 .main-container {
     width: 100%;
-    max-width: 800px;
-    padding: 20px;
-    /*background-color: #c6ecec; /* Slightly lighter dark background */
-    background-color: #40ccb9; /* White background with 80% opacity */
+    max-width: 1000px;
+    padding: 10px;
+    background-color: #40ccb9;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     text-align: center;
-    position: relative; /* Ensure the container is the reference for absolute positioning */
+    position: relative;
+    margin: 20px;
 }
 
 .modal {
@@ -119,10 +106,10 @@ body {
 
 #status {
     position: absolute;
-    top: 10px;   /* Adjust as necessary */
-    left: 20px;  /* Adjust as necessary */
-    font-size: 22px; /* Customize the font size if needed */
-    color: #fffefe; /* Adjust text color */
+    top: 10px;
+    left: 10px;
+    font-size: 16px;
+    color: white;
 }
 
 #game-over-message {
@@ -130,10 +117,10 @@ body {
     top: 45%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 100px;
+    font-size: 50px;
     color: red;
     font-weight: bold;
-    display: none; /* Hidden by default */
+    display: none;
 }
 
 #game-over-message.show {
@@ -158,7 +145,7 @@ h1 {
     width: 100%;
     max-width: 600px; /* Adjust as needed */
     margin: 0 auto; /* Center the container */
-    gap: 50px;
+    gap: 10px;
 }
 
 /* Flexbox to adjust spacing of left and right groups */
@@ -167,12 +154,13 @@ h1 {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    gap: 50px;
+    gap: 10px;
 }
 
 /* Individual color button */
 .color-button {
-    width: 250px; /* Adjust width to ensure they fit within the container */
+    width: 45vw; /* Responsive width */
+    max-width: 200px; /* Limit max width */
     height: auto;
     transition: transform 0.2s;
 }
@@ -193,21 +181,20 @@ h1 {
 
 
 /* Start button styling */
-#start-game {
-    margin-top: 30px;
-    padding: 20px 30px;
-    background-color: #007bff; /* Bright blue button */
-    color: #ffffff;
-    font-size: 20px;
+#start-game, #hard-mode {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
-
+    margin-top: 10px;
 }
 
-#start-game:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+#start-game:hover, #hard-mode:hover {
+    background-color: #0056b3;
 }
 
 #start-game.hidden {
@@ -223,19 +210,32 @@ h1 {
 
 #hard-mode {
     position: absolute;
-    bottom: 25px;   /* Adjust as necessary */
-    right: 25px;  /* Adjust as necessary */
-    margin-top: 30px;
-    padding: 10px 10px;
-    background-color: #df7d7d; /* Bright blue button */
-    color: #ffffff;
-    font-size: 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    bottom: 10px;
+    right: 10px;
 }
 
 #hard-mode:hover {
     background-color: #db1414; /* Darker blue on hover */
+}
+
+/* Media Queries for Mobile */
+@media (max-width: 768px) {
+    .highscores {
+        width: 95vw;
+        max-width: none;
+    }
+
+    .color-button {
+        width: 40vw;
+        max-width: none;
+    }
+
+    .main-container {
+        width: 95vw;
+        margin: 10px;
+    }
+
+    #game-over-message {
+        font-size: 40px;
+    }
 }

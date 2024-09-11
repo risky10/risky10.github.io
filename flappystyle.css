@@ -1,0 +1,32 @@
+body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #252525; /* Sky blue background */
+}
+
+canvas {
+    border: 2px solid black;
+    background-color: #70c5ce;
+}
+
+/* Pipe styling */
+.pipe {
+    position: absolute;
+    width: 80px;
+    background-color: green;
+}
+
+.pipe.top {
+    top: 0;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.pipe.bottom {
+    bottom: 0;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
