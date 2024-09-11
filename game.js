@@ -7,6 +7,8 @@ export function initializeGame(db) {
         const startButton = document.getElementById('start-game');
         const statusDisplay = document.getElementById('status');
         const gameOverMessage = document.getElementById('game-over-message');
+        const highscoreTab = document.querySelector('.highscore-tab');
+        const highscoresContainer = document.querySelector('.highscores');
         const clickSound = new Audio('sounds/buzzer.wav');
         const gameoverSound = new Audio('sounds/wrong.wav');
 
@@ -105,6 +107,12 @@ export function initializeGame(db) {
             const modal = document.getElementById('highscore-modal');
             modal.style.display = 'none';
             displayHighscores('normal');
+        });
+
+        // Toggle highscores visibility
+        highscoreTab.addEventListener('click', () => {
+            highscoresContainer.classList.toggle('hidden');
+            highscoreTab.classList.toggle('active');
         });
 
         // Flash the button to show sequence
