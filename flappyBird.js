@@ -4,20 +4,32 @@ const ctx = canvas.getContext('2d');
 // Function to adjust canvas size based on the device
 function resizeCanvas() {
     const aspectRatio = 1200 / 700; // Original aspect ratio of your canvas
-    if (window.innerWidth <= 767) {
-        // Mobile: Set canvas to fit screen width
-        canvas.width = Math.min(window.innerWidth * 0.9, 500); // Smaller screens
+    let screenWidth = window.innerWidth;
+    let screenHeight = window.innerHeight;
+
+    // Landscape mode (horizontal)
+    if (screenWidth > screenHeight) {
+        // Set the canvas height to fit the screen height
+        canvas.height = screenHeight * 0.9; // 90% of the screen height
+        canvas.width = canvas.height * aspectRatio;
+
+        // Ensure that the canvas width does not exceed the screen width
+        if (canvas.width > screenWidth * 0.9) {
+            canvas.width = screenWidth * 0.9;  // 90% of the screen width
+            canvas.height = canvas.width / aspectRatio;
+        }
+    } 
+    // Portrait mode (vertical)
+    else {
+        // Set the canvas width to fit the screen width
+        canvas.width = screenWidth * 0.9;  // 90% of the screen width
         canvas.height = canvas.width / aspectRatio;
 
-        // Ensure height does not exceed max-height of 300px
-        if (canvas.height > 300) {
-            canvas.height = 300;
+        // Ensure that the canvas height does not exceed the screen height
+        if (canvas.height > screenHeight * 0.9) {
+            canvas.height = screenHeight * 0.9;  // 90% of the screen height
             canvas.width = canvas.height * aspectRatio;
         }
-    } else {
-        // Desktop: Default canvas size
-        canvas.width = 1200;
-        canvas.height = 700;
     }
 }
 
