@@ -10,18 +10,22 @@ function adjustCanvasSize() {
         // Portrait mode
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
+        console.log(canvas.width +" height "+canvas.height);
     } else {
         // Landscape mode
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
+        console.log(canvas.width +" width "+canvas.height);
     }
 }
 
 window.addEventListener('orientationchange', () => {
     adjustCanvasSize();
+    console.log("orientation change");
 });
 window.addEventListener('resize', () => {
     adjustCanvasSize();
+    console.log("resize change");
 });
 
 // Set canvas size
