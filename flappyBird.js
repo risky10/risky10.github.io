@@ -10,22 +10,30 @@ function adjustCanvasSize() {
         // Portrait mode
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-        console.log(canvas.width +" height "+canvas.height);
     } else {
         // Landscape mode
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-        console.log(canvas.width +" width "+canvas.height);
+    }
+}
+
+function enterFullscreen() {
+    if (canvas.requestFullscreen) {
+        canvas.requestFullscreen();
+    } else if (canvas.mozRequestFullScreen) { // Firefox
+        canvas.mozRequestFullScreen();
+    } else if (canvas.webkitRequestFullscreen) { // Chrome, Safari and Opera
+        canvas.webkitRequestFullscreen();
+    } else if (canvas.msRequestFullscreen) { // IE/Edge
+        canvas.msRequestFullscreen();
     }
 }
 
 window.addEventListener('orientationchange', () => {
     adjustCanvasSize();
-    console.log("orientation change");
 });
 window.addEventListener('resize', () => {
     adjustCanvasSize();
-    console.log("resize change");
 });
 
 // Set canvas size
@@ -226,8 +234,10 @@ function handleFlap(event) {
     if (event.code === 'Space' && !gameOver) {
         if (!gameStarted) {
             gameStarted = true;
+	    enterFullscreen();
         }
         bird.velocity = bird.lift;  // Move the bird upwards when space is pressed
+        
     }
 }
 
@@ -236,8 +246,10 @@ function handleTap() {
     if (!gameOver) {
         if (!gameStarted) {
             gameStarted = true;
+	    enterFullscreen();
         }
         bird.velocity = bird.lift;  // Move the bird upwards when the screen is tapped
+        
     }
 }
 
