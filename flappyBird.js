@@ -2,11 +2,12 @@ const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
 // Function to adjust canvas size based on the device
-function adjustCanvasSize() {
+function resizeCanvas() {
+    const aspectRatio = 1200 / 700; // Original aspect ratio of your canvas
     if (window.innerWidth <= 767) {
         // Mobile: Set canvas to fit screen width
-        canvas.width = window.innerWidth * 0.9; // Slightly smaller than screen width
-        canvas.height = window.innerHeight * 0.8; // Slightly smaller than screen height
+        canvas.width = Math.min(window.innerWidth * 0.9, 500); // Smaller screens
+        canvas.height = canvas.width / aspectRatio;
     } else {
         // Desktop: Default canvas size
         canvas.width = 1200;
@@ -15,8 +16,8 @@ function adjustCanvasSize() {
 }
 
 // Set canvas size
-adjustCanvasSize();
-
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
 // Bird object
 const bird = {
     x: 100,
