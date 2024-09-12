@@ -10,6 +10,8 @@ body {
 canvas {
     border: 2px solid black;
     background-color: #70c5ce;
+    width: 1200px;
+    height: 700px; /* Adjust the default size */
 }
 
 /* Pipe styling */
@@ -29,4 +31,29 @@ canvas {
     bottom: 0;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
+}
+
+/* Mobile-Specific Styles */
+@media only screen and (max-width: 767px) {
+    /* Adjust canvas size for mobile */
+    canvas {
+        width: 100%; /* Full width of the screen */
+        height: auto; /* Maintain aspect ratio */
+    }
+
+    /* Adjust body padding and layout for mobile */
+    body {
+        justify-content: flex-start;
+        align-items: flex-start;
+        background-color: #f0f0f0;
+    }
+
+    /* Adjust the pipes for mobile */
+    .pipe {
+        width: 60px;
+    }
+
+    .pipe.top, .pipe.bottom {
+        border-radius: 10px;
+    }
 }

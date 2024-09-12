@@ -1,9 +1,21 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
+// Function to adjust canvas size based on the device
+function adjustCanvasSize() {
+    if (window.innerWidth <= 767) {
+        // Mobile: Set canvas to fit screen width
+        canvas.width = window.innerWidth * 0.9; // Slightly smaller than screen width
+        canvas.height = window.innerHeight * 0.8; // Slightly smaller than screen height
+    } else {
+        // Desktop: Default canvas size
+        canvas.width = 1200;
+        canvas.height = 700;
+    }
+}
+
 // Set canvas size
-canvas.width = 1200;
-canvas.height = 700;
+adjustCanvasSize();
 
 // Bird object
 const bird = {
@@ -18,8 +30,9 @@ const bird = {
 
 // Variables for pipe
 let pipes = [];
-const pipeWidth = 80; 
-const pipeGap = 220;
+// Adjust pipe properties for mobile
+const pipeWidth = (window.innerWidth <= 767) ? 60 : 80;
+const pipeGap = (window.innerWidth <= 767) ? 150 : 220;
 let pipeSpeed = 5;
 let pipeInterval = 1800;  // Time in milliseconds between pipe generation
 let pipeTimer = 0;
@@ -46,6 +59,11 @@ pipeImageBottom.src = 'images/gailsnailbot.png';  // Path to your top pipe image
 
 const birdImage = new Image();
 birdImage.src = 'images/flappybird.jpg';
+
+// Redraw everything when the window is resized
+window.addEventListener('resize', () => {
+    adjustCanvasSize();
+});
 
 // Generate new pipes
 function createPipe() {
