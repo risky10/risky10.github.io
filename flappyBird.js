@@ -8,6 +8,12 @@ function resizeCanvas() {
         // Mobile: Set canvas to fit screen width
         canvas.width = Math.min(window.innerWidth * 0.9, 500); // Smaller screens
         canvas.height = canvas.width / aspectRatio;
+
+        // Ensure height does not exceed max-height of 300px
+        if (canvas.height > 300) {
+            canvas.height = 300;
+            canvas.width = canvas.height * aspectRatio;
+        }
     } else {
         // Desktop: Default canvas size
         canvas.width = 1200;

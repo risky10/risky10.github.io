@@ -40,6 +40,7 @@ canvas {
         width: 100%; /* Full width of the screen */
         height: auto; /* Maintain aspect ratio */
         max-width: 500px;  /* Limit the maximum width on mobile */
+        max-height: 300px; /* Limit the maximum height on mobile */
     }
 
     /* Adjust body padding and layout for mobile */
