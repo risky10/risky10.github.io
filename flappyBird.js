@@ -5,13 +5,28 @@ function isMobileDevice() {
     return /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }
 
-let screenWidth = window.innerWidth;
-let screenHeight = window.innerHeight;
+function adjustCanvasSize() {
+    if (window.innerHeight > window.innerWidth) {
+        // Portrait mode
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    } else {
+        // Landscape mode
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+}
+
+window.addEventListener('orientationchange', () => {
+    adjustCanvasSize();
+});
+window.addEventListener('resize', () => {
+    adjustCanvasSize();
+});
 
 // Set canvas size
 if(isMobileDevice()) {
-    canvas.width = screenWidth;
-    canvas.height = screenHeight;
+    adjustCanvasSize();
 }else {
     canvas.width = 1200;
     canvas.height = 700;
