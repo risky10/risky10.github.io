@@ -1,41 +1,22 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
-// Function to adjust canvas size based on the device
-function resizeCanvas() {
-    const aspectRatio = 1200 / 700; // Original aspect ratio of your canvas
-    let screenWidth = window.innerWidth;
-    let screenHeight = window.innerHeight;
-
-    // Landscape mode (horizontal)
-    if (screenWidth > screenHeight) {
-        // Set the canvas height to fit the screen height
-        canvas.height = screenHeight * 0.9; // 90% of the screen height
-        canvas.width = canvas.height * aspectRatio;
-
-        // Ensure that the canvas width does not exceed the screen width
-        if (canvas.width > screenWidth * 0.9) {
-            canvas.width = screenWidth * 0.9;  // 90% of the screen width
-            canvas.height = canvas.width / aspectRatio;
-        }
-    } 
-    // Portrait mode (vertical)
-    else {
-        // Set the canvas width to fit the screen width
-        canvas.width = screenWidth * 0.9;  // 90% of the screen width
-        canvas.height = canvas.width / aspectRatio;
-
-        // Ensure that the canvas height does not exceed the screen height
-        if (canvas.height > screenHeight * 0.9) {
-            canvas.height = screenHeight * 0.9;  // 90% of the screen height
-            canvas.width = canvas.height * aspectRatio;
-        }
-    }
+function isMobileDevice() {
+    return /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }
 
+let screenWidth = window.innerWidth;
+let screenHeight = window.innerHeight;
+
 // Set canvas size
-window.addEventListener('resize', resizeCanvas);
-resizeCanvas();
+if(isMobileDevice()) {
+    canvas.width = screenWidth;
+    canvas.height = screenHeight;
+}else {
+    canvas.width = 1200;
+    canvas.height = 700;
+}
+
 // Bird object
 const bird = {
     x: 100,
@@ -50,8 +31,8 @@ const bird = {
 // Variables for pipe
 let pipes = [];
 // Adjust pipe properties for mobile
-const pipeWidth = (window.innerWidth <= 767) ? 60 : 80;
-const pipeGap = (window.innerWidth <= 767) ? 150 : 220;
+const pipeWidth = isMobileDevice() ? 60 : 80;
+const pipeGap = isMobileDevice() ? 150 : 220;
 let pipeSpeed = 5;
 let pipeInterval = 1800;  // Time in milliseconds between pipe generation
 let pipeTimer = 0;
@@ -78,11 +59,6 @@ pipeImageBottom.src = 'images/gailsnailbot.png';  // Path to your top pipe image
 
 const birdImage = new Image();
 birdImage.src = 'images/flappybird.jpg';
-
-// Redraw everything when the window is resized
-window.addEventListener('resize', () => {
-    adjustCanvasSize();
-});
 
 // Generate new pipes
 function createPipe() {
@@ -203,6 +179,7 @@ function endGame() {
         gameStarted = false;
         gameOver = false;
         newGame = true;
+        lastTime = performance.now();
  
         restartBtn.remove(); // Remove the button after restart
         gameLoop(); // Restart the game loop
@@ -258,7 +235,11 @@ function drawBird() {
 }
 
 // Main game loop
+let lastTime = performance.now();
 function gameLoop() {
+    let currentTime = performance.now();
+    let deltaTime = currentTime - lastTime;
+    lastTime = currentTime;
     if (!gameOver) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -274,21 +255,13 @@ function gameLoop() {
             updatePipes();
             checkCollision();
             drawScore();
-            if(newGame) {
-                pipeTimer += 100; // Approximate frame time in milliseconds
-                if (pipeTimer >= pipeInterval) {
-                    createPipe();
-                    pipeTimer = 0;
-                    newGame = false;
-                }
-            } else {
-                pipeTimer += 16; // Approximate frame time in milliseconds
-                if (pipeTimer >= pipeInterval) {
-                    createPipe();
-                    pipeTimer = 0;
-                }
+
+            // Handle pipe generation
+            pipeTimer += deltaTime;
+            if (pipeTimer >= pipeInterval) {
+                createPipe();
+                pipeTimer = 0;
             }
-            
         }
 
         animationId = requestAnimationFrame(gameLoop);
