@@ -17,18 +17,6 @@ function adjustCanvasSize() {
     }
 }
 
-function enterFullscreen() {
-    if (canvas.requestFullscreen) {
-        canvas.requestFullscreen();
-    } else if (canvas.mozRequestFullScreen) { // Firefox
-        canvas.mozRequestFullScreen();
-    } else if (canvas.webkitRequestFullscreen) { // Chrome, Safari and Opera
-        canvas.webkitRequestFullscreen();
-    } else if (canvas.msRequestFullscreen) { // IE/Edge
-        canvas.msRequestFullscreen();
-    }
-}
-
 window.addEventListener('orientationchange', () => {
     adjustCanvasSize();
 });
@@ -66,15 +54,16 @@ let pipeTimer = 0;
 // Variables for pipe movement
 let pipeVerticalSpeed = 2;  // Speed at which the pipes move vertically
 let pipeDirection = 1;      // 1 means down, -1 means up
-const verticalMovementThreshold = 10; // Start moving pipes at score 10
+const verticalMovementThreshold = 30; // Start moving pipes at score 10
 const bufferZone = 10;  // Buffer to prevent stuttering
 
 let gameStarted = false;
 let gameOver = false;
 let newGame = true;
+let movingPipes = false;
 
 let score = 0;
-let scoreIncreaseThreshold = 5; // Increase difficulty every 50 points
+let scoreIncreaseThreshold = 1; // Increase difficulty every 5 points
 
 let animationId;
 
@@ -94,7 +83,8 @@ function createPipe() {
         x: canvas.width,
         topHeight: pipeHeight,
         bottomHeight: canvas.height - pipeHeight - pipeGap,
-        direction: Math.random() > 0.5 ? 1 : -1  // Randomize starting direction (1 = down, -1 = up)
+        direction: Math.random() > 0.5 ? 1 : -1,  // Randomize starting direction (1 = down, -1 = up)
+        verticalSpeed: pipeVerticalSpeed  // Set individual vertical speed for each pipe
     };
     pipes.push(pipe);
 }
@@ -102,14 +92,14 @@ function createPipe() {
 function drawPipes() {
     pipes.forEach(pipe => {
         if (score >= verticalMovementThreshold) {
-            pipe.topHeight += pipeVerticalSpeed * pipeDirection;
+            pipe.topHeight += pipe.verticalSpeed * pipe.direction;
             pipe.bottomHeight = canvas.height - pipe.topHeight - pipeGap;
 
             // Change direction if pipes reach the top or bottom limits with a buffer
-            if (pipe.topHeight <= 0) {
-                pipeDirection = 1;  // Start expanding the top pipe and shrinking the bottom pipe
-            } else if (pipe.bottomHeight <= 0) {
-                pipeDirection = -1;  // Start shrinking the top pipe and expanding the bottom pipe
+            if (pipe.topHeight <= bufferZone) {
+                pipe.direction = 1;  // Start expanding the top pipe and shrinking the bottom pipe
+            } else if (pipe.bottomHeight <= bufferZone) {
+                pipe.direction = -1;  // Start shrinking the top pipe and expanding the bottom pipe
             }
         }
         // Top pipe
@@ -133,11 +123,11 @@ function updatePipes() {
             // Increase difficulty based on score
             if (score % scoreIncreaseThreshold === 0) {
                 if(score > verticalMovementThreshold) {
-                    pipeVerticalSpeed += 0.5;
+                    pipeVerticalSpeed += 0.1;
                 }
-                pipeSpeed += 0.5; // Gradually increase the speed
-                if(pipeInterval>800) {
-                    pipeInterval -= 100;
+                pipeSpeed += 0.1; // Gradually increase the speed
+                if(pipeInterval>1000) {
+                    pipeInterval -= 20;
                 }
                 
             }
@@ -206,6 +196,7 @@ function endGame() {
         gameStarted = false;
         gameOver = false;
         newGame = true;
+        movingPipes = false;
         lastTime = performance.now();
  
         restartBtn.remove(); // Remove the button after restart
@@ -234,10 +225,8 @@ function handleFlap(event) {
     if (event.code === 'Space' && !gameOver) {
         if (!gameStarted) {
             gameStarted = true;
-	    enterFullscreen();
         }
         bird.velocity = bird.lift;  // Move the bird upwards when space is pressed
-        
     }
 }
 
@@ -246,10 +235,8 @@ function handleTap() {
     if (!gameOver) {
         if (!gameStarted) {
             gameStarted = true;
-	    enterFullscreen();
         }
         bird.velocity = bird.lift;  // Move the bird upwards when the screen is tapped
-        
     }
 }
 

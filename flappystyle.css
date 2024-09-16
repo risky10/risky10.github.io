@@ -55,3 +55,22 @@ canvas {
         border-radius: 10px;
     }
 }
+
+/* Logout button styling */
+.logout-button {
+    position: absolute;
+    top: 3%;
+    right: 20px;
+    padding: 15px 25px;
+    background-color: #ec4343; /* Darker button */
+    color: #ffffff;
+    font-size: 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.logout-button:hover {
+    background-color: #b41010; /* Slightly lighter on hover */
+}

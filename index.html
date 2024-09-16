@@ -9,12 +9,16 @@
 <body>
     <div class="sunnyGames">
         <h1 class="title">ALWAYS SUNNY</h1>
-        <img id="charlieSimon" class="simonSays" src="images/charlieSimonsays.png" alt="Charlie Simon Says">
+        <img id="charlieSimon" class="simonSays" src="images/charlieSimonsays.jpg" alt="Charlie Simon Says">
+        <img id="flappyDee" class="flappyDee" src="images/deebird.jpg" alt="Dee Flappy Bird">
     </div>
 
     <script>
         document.getElementById('charlieSimon').addEventListener('click', () => {
             window.location.href = 'main.html';
+        });
+        document.getElementById('flappyDee').addEventListener('click', () => {
+            window.location.href = 'flappyGame.html';
         });
     </script>
 </body>

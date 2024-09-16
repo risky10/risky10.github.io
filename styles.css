@@ -24,7 +24,9 @@ body {
 
 .simonSays {
     position: absolute;
-    left: 50%;
+    max-width: 300px;
+    max-height: 300px;
+    left: 30%;
     top: 30%;
 }
 
@@ -34,5 +36,22 @@ body {
 }
 /* Highlight on click */
 .simonSays:active {
+    transform: scale(1.15); /* Slightly enlarge the image on click */
+}
+
+.flappyDee {
+    position: absolute;
+    max-width: 300px;
+    max-height: 300px;
+    left: 50%;
+    top: 30%;
+}
+
+.flappyDee:hover {
+    /*background-color: #afb12d;*/
+    transform: scale(1.05); /* Slightly enlarge the image on click */
+}
+/* Highlight on click */
+.flappyDee:active {
     transform: scale(1.15); /* Slightly enlarge the image on click */
 }
