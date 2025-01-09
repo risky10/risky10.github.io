@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Random Alert Timer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    .progress-container {
+      width: 80%;
+      background-color: #f3f3f3;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin: 20px auto;
+      height: 20px;
+      position: relative;
+    }
+    .progress-bar {
+      height: 100%;
+      background-color: #4caf50;
+      width: 0;
+      border-radius: 5px;
+    }
+    #cooldown-message {
+      color: red;
+      font-size: 20px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Random Alert Timer</h1>
+  <label for="max-time">Max time for alert (seconds):</label>
+  <input type="number" id="max-time" min="1" placeholder="Enter max time"><br><br>
+  <label for="cooldown-time">Cooldown time (seconds):</label>
+  <input type="number" id="cooldown-time" min="1" placeholder="Enter cooldown time"><br><br>
+  <button id="start-button">Start</button>
+  <p id="cooldown-message">Cooldown in progress...</p>
+
+  <h3>Main Timer</h3>
+  <div class="progress-container">
+    <div id="main-progress-bar" class="progress-bar"></div>
+  </div>
+
+  <h3>Cooldown Timer</h3>
+  <div class="progress-container">
+    <div id="cooldown-progress-bar" class="progress-bar"></div>
+  </div>
+
+  <audio id="alert-sound">
+    <source src="sounds/buzzer.wav" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+    document.getElementById('start-button').addEventListener('click', () => {
+      const maxTime = parseInt(document.getElementById('max-time').value, 10);
+      const cooldownTime = parseInt(document.getElementById('cooldown-time').value, 10);
+
+      if (isNaN(maxTime) || isNaN(cooldownTime) || maxTime <= 0 || cooldownTime <= 0) {
+        alert('Please enter valid positive numbers for both timers.');
+        return;
+      }
+
+      const mainProgressBar = document.getElementById('main-progress-bar');
+      const cooldownProgressBar = document.getElementById('cooldown-progress-bar');
+      const cooldownMessage = document.getElementById('cooldown-message');
+      const alertSound = document.getElementById('alert-sound');
+
+      let randomTime;
+      let mainTimerInterval;
+
+      function updateProgressBar(bar, duration, onComplete) {
+        const startTime = Date.now();
+        bar.style.width = '0%';
+
+        const interval = setInterval(() => {
+          const elapsed = (Date.now() - startTime) / 1000;
+          const percentage = (elapsed / duration) * 100;
+          bar.style.width = `${Math.min(percentage, 100)}%`;
+
+          if (elapsed >= duration) {
+            clearInterval(interval);
+            if (onComplete) onComplete();
+          }
+        }, 100);
+
+        return interval; // Return interval to allow manual stopping
+      }
+
+      function stopProgressBar(interval) {
+        clearInterval(interval);
+      }
+
+      function startMainTimer() {
+        randomTime = Math.random() * maxTime; // Pick a random alert time
+        console.log(`Next alert will trigger at ${randomTime.toFixed(2)} seconds`);
+
+        // Start the main progress bar
+        mainTimerInterval = updateProgressBar(mainProgressBar, maxTime, null);
+
+        // Schedule the alert
+        setTimeout(() => {
+          alertSound.play();
+          console.log('Alert sound played');
+
+          // Stop the main timer and transition to cooldown
+          stopProgressBar(mainTimerInterval);
+          startCooldownTimer();
+        }, randomTime * 1000);
+      }
+
+      function startCooldownTimer() {
+        cooldownMessage.style.display = 'block';
+
+        updateProgressBar(cooldownProgressBar, cooldownTime, () => {
+          cooldownMessage.style.display = 'none';
+          startMainTimer(); // Restart the main timer
+        });
+      }
+
+      startMainTimer(); // Start the first cycle
+    });
+  </script>
+</body>
+</html>

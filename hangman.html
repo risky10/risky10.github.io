@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hangman Game</title>
+    <link rel="stylesheet" href="hangmanstyle.css">
+</head>
+<body>
+    <h1>Hangman Game</h1>
+    <canvas id="hangmanCanvas" width="400" height="400"></canvas>
+    <div id="wordDisplay">_ _ _ _ _</div>
+    <div id="letterButtons"></div>
+    <div id="wrongGuesses"></div>
+    <div id="message"></div>
+
+    <div class="center-buttons"></div>
+        <button id="restartButton" onclick="restartGame()" style="display:none;">Restart</button>
+        <button id="nextWordButton" onclick="nextWord()" style="display:none;">Next Word</button>
+    </div>
+
+    <script src="hangman.js"></script>
+</body>
+</html>
