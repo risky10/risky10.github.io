@@ -56,3 +56,22 @@ body {
 .flappyDee:active {
     transform: scale(1.15); /* Slightly enlarge the image on click */
 }
+
+.lotr {
+    position: absolute;
+    max-width: 300px;
+    width: 300px;
+    max-height: 300px;
+    height: 300px;
+    left: 70%;
+    top: 30%;
+}
+
+.lotr:hover {
+    /*background-color: #afb12d;*/
+    transform: scale(1.05); /* Slightly enlarge the image on click */
+}
+/* Highlight on click */
+.lotr:active {
+    transform: scale(1.15); /* Slightly enlarge the image on click */
+}
